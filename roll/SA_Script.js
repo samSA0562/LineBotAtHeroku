@@ -86,16 +86,9 @@ function textIsNeedReply(sourceId, trigger)
 	return false;
 }
 function otherParse(trigger) {
-	let splitArr=[',','.','_',' '],
-		numberArr=[],
-		stringArr=[],
-		flag=false,
-		tempPos=0,
-		tempWord='',
-		tempRply='';
+	let splitArr=[',','.','_',' '], numberArr=[], stringArr=[], flag=false, tempPos=0, tempWord='', tempRply='';
 		rply.type = 'text';
 
-		
 	for (i=0;i<trigger.length;i++) {
 		tempWord=trigger.charAt(i);
 		for (j=0;j<splitArr.length;j++) {
@@ -103,12 +96,11 @@ function otherParse(trigger) {
 				stringArr.push(tempWord)
 				if(!trigger.substring(tempPos,i)) flag=true; 
 				numberArr.push(trigger.substring(tempPos,i))
-				console.log('tempPos : %s,  i : %s',tempPos,i)
-				console.log('subString : %s \n',trigger.substring(tempPos,i))
 				tempPos=i+1
 			}
 		}
 	}
+	if(numberArr.length<2) return;
 	if(!trigger.substring(tempPos,i)) flag=true; 
 	numberArr.push(trigger.substring(tempPos,i))
 	for (i=0;i<numberArr.length;i++){
@@ -119,23 +111,24 @@ function otherParse(trigger) {
 	}
 	if(!flag) {
 		for(i=0;i<numberArr.length;i++) {
-			MathI = paddingLeft("1", numberArr[i].length)
+			//MathI = paddingLeft("1", numberArr[i].length)
+			MathI = 1;
 			numberArr[i]=numberArr[i] * 1 + MathI * 1;
 			if(i+1==numberArr.length) tempRply+=numberArr[i]
 			else tempRply+=numberArr[i]+stringArr[i]
 		}
 		rply.text = tempRply;
-		console.log(rply)
 		return rply;
 	}
 	return;
-	
-	function paddingLeft(str,lenght){
-		if(str.length >= lenght)
+	/*
+	function paddingLeft(str,length){
+		if(str.length >= length)
 		return str;
 		else
-		return paddingLeft("1" +str,lenght);
+		return paddingLeft("1" +str,length);
 	}
+	*/
 }
 
 //回話
