@@ -85,6 +85,58 @@ function textIsNeedReply(sourceId, trigger)
 	}
 	return false;
 }
+function otherParse(trigger) {
+	let splitArr=[',','.','_',' '],
+		numberArr=[],
+		stringArr=[],
+		flag=false,
+		tempPos=0,
+		tempWord='',
+		tempRply='';
+		rply.type = 'text';
+
+		
+	for (i=0;i<trigger.length;i++) {
+		tempWord=trigger.charAt(i);
+		for (j=0;j<splitArr.length;j++) {
+			if (tempWord == splitArr[j]) {
+				stringArr.push(tempWord)
+				if(!trigger.substring(tempPos,i)) flag=true; 
+				numberArr.push(trigger.substring(tempPos,i))
+				console.log('tempPos : %s,  i : %s',tempPos,i)
+				console.log('subString : %s \n',trigger.substring(tempPos,i))
+				tempPos=i+1
+			}
+		}
+	}
+	if(!trigger.substring(tempPos,i)) flag=true; 
+	numberArr.push(trigger.substring(tempPos,i))
+	for (i=0;i<numberArr.length;i++){
+		if(isNaN(numberArr[i])) {
+			flag=true; 
+			break;
+		}
+	}
+	if(!flag) {
+		for(i=0;i<numberArr.length;i++) {
+			MathI = paddingLeft("1", numberArr[i].length)
+			numberArr[i]=numberArr[i] * 1 + MathI * 1;
+			if(i+1==numberArr.length) tempRply+=numberArr[i]
+			else tempRply+=numberArr[i]+stringArr[i]
+		}
+		rply.text = tempRply;
+		return rply;
+	}
+	return;
+	
+	function paddingLeft(str,lenght){
+		if(str.length >= lenght)
+		return str;
+		else
+		return paddingLeft("1" +str,lenght);
+	}
+}
+
 //回話
 function ReplyMsg(trigger) {
 	rply.text = trigger;
@@ -176,5 +228,6 @@ module.exports = {
 	textIsNeedReply,
 	ReplyMsg,
 	InitializeAllSheetsData,
-	stickerShruggie
+	stickerShruggie,
+	otherParse
 };

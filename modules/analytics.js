@@ -98,7 +98,7 @@ function parseInputText(sourceId, rplyToken, inputStr) {
 		else
 			return exports.funny.BStyleFlagSCRIPTS(); 
 	}
-	
+	return exports.SA_Script.otherParse(inputStr);
 	/*tarot 指令
 	if (trigger.match(/猜拳/) != null) {
 		return RockPaperScissors(inputStr, mainMsg[1]);
