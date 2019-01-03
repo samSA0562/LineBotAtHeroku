@@ -100,7 +100,7 @@ function otherParse(trigger) {
 			}
 		}
 	}
-	if(numberArr.length<2) return;
+	if(numberArr.length<1) return;
 	if(!trigger.substring(tempPos,i)) flag=true; 
 	numberArr.push(trigger.substring(tempPos,i))
 	for (i=0;i<numberArr.length;i++){
