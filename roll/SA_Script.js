@@ -125,6 +125,7 @@ function otherParse(trigger) {
 			else tempRply+=numberArr[i]+stringArr[i]
 		}
 		rply.text = tempRply;
+		console.log(rply)
 		return rply;
 	}
 	return;
