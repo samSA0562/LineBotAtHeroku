@@ -5,8 +5,8 @@ var SDMDSheet_BakaLang = [];
 var Sheet_MsgSourceLog = [];
 var googleAuthData;
 
-var items=["A", "B", "C", "D", "E", "F", "G"];
-var itemsWeight=[20, 15, 10, 10, 20, 25];
+var items=["A賞(0.01％) ", "B賞(0.99％)", "C賞(1.5％)", "D賞(2.5％)", "E賞(3％)" , "F賞(5％)", "G賞(87％)"];
+var itemsWeight=[1, 99, 150, 250, 300, 500, 8700];
 
 const {google} = require('googleapis');
 
