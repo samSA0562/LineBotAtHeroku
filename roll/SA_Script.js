@@ -89,8 +89,11 @@ function textIsNeedReply(sourceId, trigger)
 	return false;
 }
 function XiaoMary(userId) {
+	let Results=[];
+	for (i=0;i<10;i++)
+		Results.push(weightedRandom(items, itemsWeight))
 	console.log('XiaoMary %s', userId);
-	return {'type':'text', 'text': weightedRandom(items, itemsWeight)};
+	return {'type':'text', 'text': Results};
 	function weightedRandom(items, itemsWeight) {
 		var totalWeight=eval(itemsWeight.join("+"));
 		console.log(totalWeight);
