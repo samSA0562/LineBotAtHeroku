@@ -244,5 +244,6 @@ module.exports = {
 	ReplyMsg,
 	InitializeAllSheetsData,
 	stickerShruggie,
+	XiaoMary,
 	otherParse
 };
