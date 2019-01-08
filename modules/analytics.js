@@ -11,7 +11,7 @@ var ReplyCount = 0; //跟上回話用全域變數_整數
 var ReplyString;    //跟上回話用全域變數_字串
 //用來呼叫骰組,新增骰組的話,要寫條件式到下面呼叫 
 //格式是 exports.骰組檔案名字.function名
-function parseInputText(sourceId, rplyToken, inputStr) {
+function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	//console.log('InputStr: ' + inputStr);
 	_isNaN = function(obj) 	{
 	return isNaN(parseInt(obj));  
@@ -91,6 +91,7 @@ function parseInputText(sourceId, rplyToken, inputStr) {
 	if (trigger.match(/鴨霸獸|巴獸/) != null) return exports.funny.randomReply() ;	
 	if (trigger.match(/運氣|運勢/) != null) return exports.funny.randomLuck(mainMsg) ; //占卜運氣		
 	if (trigger.match(/幹話|江西話|榦話/) != null) return exports.SA_Script.BaKaLanguage(trigger);
+	if (trigger.match(/小瑪莉/) != null) return exports.SA_Script.XiaoMary(userId);
 	if (exports.SA_Script.textIsNeedReply(sourceId, trigger)) 
 	{
 		if (Math.floor(Math.random()*100) <= 87) //87%機率重覆回話)

@@ -168,7 +168,7 @@ function handleEvent(event) {
 		//console.log(message);
 		switch (message.type) {
 			case 'text':
-				return exports.analytics.parseInputText(sourceId, event.rplyToken, event.message.text); 
+				return exports.analytics.parseInputText(sourceId, event.source.userId, event.rplyToken, event.message.text); 
 			case 'sticker':
 				return exports.analytics.parseInputSticker(sourceId, event.rplyToken, event.message.stickerId, event.message.packageId); 
 			default:

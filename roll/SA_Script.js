@@ -5,6 +5,9 @@ var SDMDSheet_BakaLang = [];
 var Sheet_MsgSourceLog = [];
 var googleAuthData;
 
+var items=["A", "B", "C", "D", "E", "F", "G"];
+var itemsWeight=[20, 15, 10, 10, 20, 25];
+
 const {google} = require('googleapis');
 
 function BaKaLanguage(trigger)
@@ -84,6 +87,24 @@ function textIsNeedReply(sourceId, trigger)
 		}
 	}
 	return false;
+}
+function XiaoMary(userId) {
+	console.log('XiaoMary %s' userId);
+	return {'type':'text', 'text': weightedRandom(items, itemsWeight)};
+	function weightedRandom(items, itemsWeight) {
+		var totalWeight=eval(itemsWeight.join("+"));
+		console.log(totalWeight);
+		var randomArray=[];
+		for(var i=0; i<items.length; i++)
+		{
+			for(var j=0; j<itemsWeight[i]; j++)
+			{
+				randomArray.push(i);
+			}
+		}
+		var randomNumber=Math.floor(Math.random()*totalWeight);
+		return items[randomArray[randomNumber]];
+	}
 }
 function otherParse(trigger) {
 	let splitArr=[',','.','_',' '], numberArr=[], stringArr=[], flag=false, tempPos=0, tempWord='', tempRply='';
