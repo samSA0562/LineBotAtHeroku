@@ -93,7 +93,7 @@ function XiaoMary(userId) {
 	for (i=0;i<10;i++)
 		Results.push(weightedRandom(items, itemsWeight))
 	console.log('XiaoMary %s', userId);
-	return {'type':'text', 'text': Results};
+	return {'type':'text', 'text': Results.toString()};
 	function weightedRandom(items, itemsWeight) {
 		var totalWeight=eval(itemsWeight.join("+"));
 		console.log(totalWeight);
