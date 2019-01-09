@@ -106,7 +106,7 @@ function XiaoMary(userId, trigger) {
 		}
 		//console.log('連抽 i = %s',i);
 		return {'type':'text', 'text':'總計抽了 '+i.toString()+' 次才獲得了 '+stringTemp+'.\n['+count[1]+'次 B賞,'+count[2]+'次 C賞,'+count[3]+'次 D賞,'+count[4]+'次 E賞,'+count[5]+'次 F賞,'+count[6]+'次 G賞'+' ]'};
-	} else if (trigger.match('單抽'!=null){
+	} else if (trigger.match('單抽')!=null){
 		return {'type':'text', 'text': weightedRandom(items, itemsWeight)};
 	} else {
 		for (i=0;i<10;i++)
