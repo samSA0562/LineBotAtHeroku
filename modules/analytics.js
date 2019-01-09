@@ -91,7 +91,7 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	if (trigger.match(/鴨霸獸|巴獸/) != null) return exports.funny.randomReply() ;	
 	if (trigger.match(/運氣|運勢/) != null) return exports.funny.randomLuck(mainMsg) ; //占卜運氣		
 	if (trigger.match(/幹話|江西話|榦話/) != null) return exports.SA_Script.BaKaLanguage(trigger);
-	if (trigger.match(/小瑪莉/) != null) return exports.SA_Script.XiaoMary(userId);
+	if (trigger.match(/小瑪莉/) != null) return exports.SA_Script.XiaoMary(userId, trigger);
 	if (exports.SA_Script.textIsNeedReply(sourceId, trigger)) 
 	{
 		if (Math.floor(Math.random()*100) <= 87) //87%機率重覆回話)
