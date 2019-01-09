@@ -89,16 +89,23 @@ function textIsNeedReply(sourceId, trigger)
 	return false;
 }
 function XiaoMary(userId, trigger) {
+	let count=[0,0,0,0,0,0,0];
 	let Results=[];
 	let stringTemp;
 	let i;
+	let j;
 	if (trigger.match('連抽')!=null) {
-		for (i=0;i<100000;i++) {
+		for (i=1;i<100000;i++) {
 			stringTemp = weightedRandom(items, itemsWeight);
+			for (j=0;j<items.length;j++)
+				if (stringTemp == items[j]) {
+					count[j]++;
+					break;
+				}
 			if (stringTemp == items[0]) break;
 		}
 		//console.log('連抽 i = %s',i);
-		return {'type':'text', 'text':'總計抽了 '+i.toString()+' 次獲得了 '+stringTemp};
+		return {'type':'text', 'text':'總計抽了 '+i.toString()+' 次才獲得了 '+stringTemp+'.\n其餘分別獲得了[ B賞 '+count[1]+' 次 C賞 '+count[2]+' 次 D賞 '+count[3]+' 次 E賞 '+count[4]+' 次 F賞 '+count[5]+' 次 G賞 '+count[6]+' 次 ]'};
 	} else {
 		for (i=0;i<10;i++)
 			Results.push(weightedRandom(items, itemsWeight));
