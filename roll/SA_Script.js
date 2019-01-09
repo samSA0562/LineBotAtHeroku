@@ -91,11 +91,13 @@ function textIsNeedReply(sourceId, trigger)
 function XiaoMary(userId, trigger) {
 	let Results=[];
 	let stringTemp;
+	let i;
 	if (trigger.match('連抽')!=null) {
-		for (let i=0;i<100000;i++) {
+		for (i=0;i<100000;i++) {
 			stringTemp = weightedRandom(items, itemsWeight);
 			if (stringTemp == items[0]) break;
 		}
+		console.log('連抽 i = %s',i);
 		return {'type':'text', 'text':i.toString()};
 	} else {
 		for (i=0;i<10;i++)
