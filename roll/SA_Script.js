@@ -105,7 +105,7 @@ function XiaoMary(userId, trigger) {
 			if (stringTemp == items[0]) break;
 		}
 		//console.log('連抽 i = %s',i);
-		return {'type':'text', 'text':'總計抽了 '+i.toString()+' 次才獲得了 '+stringTemp+'.\n其餘分別獲得了[ B賞 '+count[1]+' 次 C賞 '+count[2]+' 次 D賞 '+count[3]+' 次 E賞 '+count[4]+' 次 F賞 '+count[5]+' 次 G賞 '+count[6]+' 次 ]'};
+		return {'type':'text', 'text':'總計抽了 '+i.toString()+' 次才獲得了 '+stringTemp+'.\n['+count[1]+'次 '+items[1]+', '+count[2]+'次 '+items[2]+', 'count[3]+'次 '+items[3]+', 'count[4]+'次 '+items[4]+', 'count[5]+'次 '+items[5]+', 'count[6]+'次 '+items[6]+' ]'};
 	} else {
 		for (i=0;i<10;i++)
 			Results.push(weightedRandom(items, itemsWeight));
