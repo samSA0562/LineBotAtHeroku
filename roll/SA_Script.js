@@ -88,10 +88,19 @@ function textIsNeedReply(sourceId, trigger)
 	}
 	return false;
 }
-function XiaoMary(userId) {
+function XiaoMary(userId, trigger) {
 	let Results=[];
-	for (i=0;i<10;i++)
-		Results.push(weightedRandom(items, itemsWeight))
+	let stringTemp;
+	if (trigger.match('連抽')!=null) {
+		for (let i=0;i<100000;i++) {
+			stringTemp = weightedRandom(items, itemsWeight);
+			if (stringTemp == items[0]) break;
+		}
+		return {'type':'text', 'text':i.toString()};
+	} else {
+		for (i=0;i<10;i++)
+			Results.push(weightedRandom(items, itemsWeight));
+	}
 	console.log('XiaoMary %s', userId);
 	return {'type':'text', 'text': Results.toString()};
 	function weightedRandom(items, itemsWeight) {
