@@ -97,8 +97,8 @@ function XiaoMary(userId, trigger) {
 			stringTemp = weightedRandom(items, itemsWeight);
 			if (stringTemp == items[0]) break;
 		}
-		console.log('連抽 i = %s',i);
-		return {'type':'text', 'text':i.toString()};
+		//console.log('連抽 i = %s',i);
+		return {'type':'text', 'text':'總計抽了 '+i.toString()+' 次獲得了 '+stringTemp};
 	} else {
 		for (i=0;i<10;i++)
 			Results.push(weightedRandom(items, itemsWeight));
@@ -107,7 +107,7 @@ function XiaoMary(userId, trigger) {
 	return {'type':'text', 'text': Results.toString()};
 	function weightedRandom(items, itemsWeight) {
 		var totalWeight=eval(itemsWeight.join("+"));
-		console.log(totalWeight);
+		//console.log(totalWeight);
 		var randomArray=[];
 		for(var i=0; i<items.length; i++)
 		{
