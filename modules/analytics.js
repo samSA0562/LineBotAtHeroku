@@ -100,6 +100,8 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 		else
 			return exports.funny.BStyleFlagSCRIPTS(); 
 	}
+	if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
+	if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
 	return exports.SA_Script.otherParse(inputStr);
 	/*tarot 指令
 	if (trigger.match(/猜拳/) != null) {

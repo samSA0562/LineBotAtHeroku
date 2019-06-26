@@ -261,12 +261,32 @@ function stickerShruggie()  {
 	rply.originalContentUrl = rply.previewImageUrl = 'https://i.imgur.com/LU1m6K5.jpg';
 	return rply;
 }
+
+function SuikaEcho() {
+	rply.type = 'image'
+	rply.originalContentUrl = rply.previewImageUrl = 'https://i.imgur.com/UGFJTbN.jpg'
+	return rply 
+}
+
+function flexMessage(mode) {
+	switch (mode) {
+		case '醬油尻':
+			return {"type":"flex","altText":"Fap Fap Fap...","contents":{"type":"carousel","contents":[{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/4rmbE.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"陳年老醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"495","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","action":{"type":"uri","label":"我她媽","uri":"https://i.imgur.com/4rmbE.jpg"}},{"type":"button","action":{"type":"uri","label":"射爆","uri":"https://i.imgur.com/4rmbE.jpg"}}]}},{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/8o3jJ.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"小蘿莉醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","flex":1,"contents":[{"type":"text","text":"6","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]},{"type":"text","text":"晶礦不足","wrap":true,"size":"xxs","margin":"md","color":"#ff5551","flex":0}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":2,"style":"primary","color":"#aaaaaa","action":{"type":"uri","label":"惡作劇","uri":"https://i.imgur.com/8o3jJ.jpg"}},{"type":"button","action":{"type":"uri","label":"尻尻","uri":"https://i.imgur.com/8o3jJ.jpg"}}]}},{"type":"bubble","body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":1,"gravity":"center","action":{"type":"uri","label":"幫我撐十秒","uri":"https://i.imgur.com"}}]}}]}}
+			break
+		case '彈性尻':
+			return {"type":"flex","altText":"Fap Fap Fap...","contents":{"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"當前狀態","weight":"bold","color":"#1DB446","size":"sm"},{"type":"text","text":"機台名稱","weight":"bold","size":"xxl","margin":"md"},{"type":"text","text":"機台位置","size":"xs","color":"#aaaaaa","wrap":true},{"type":"separator","margin":"xxl"},{"type":"box","layout":"vertical","margin":"xxl","spacing":"sm","contents":[{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"執行時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"90分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"待機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"20分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"停機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"3分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"xxl","contents":[{"type":"text","text":"完工次數","size":"sm","color":"#555555"},{"type":"text","text":"3","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"稼動率","size":"sm","color":"#555555"},{"type":"text","text":"13%","size":"sm","color":"#111111","align":"end"}]}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"md","contents":[{"type":"text","text":"索取時間","size":"xs","color":"#aaaaaa","flex":0},{"type":"text","text":"YYYY/MM/DD HH:mm:ss","color":"#aaaaaa","size":"xs","align":"end"}]}]}}}
+			break
+	}
+	return 
+}
 module.exports = {
 	BaKaLanguage,
 	textIsNeedReply,
 	ReplyMsg,
 	InitializeAllSheetsData,
 	stickerShruggie,
+	SuikaEcho,
 	XiaoMary,
-	otherParse
+	otherParse,
+	flexMessage,
 };
