@@ -106,6 +106,17 @@ function XiaoMary(userId, trigger) {
 		}
 		//console.log('連抽 i = %s',i);
 		return {'type':'text', 'text':'抽了 '+i.toString()+' 次才獲得 '+stringTemp+'.\n['+count[1]+'次 B賞,'+count[2]+'次 C賞,'+count[3]+'次 D賞,'+count[4]+'次 E賞,'+count[5]+'次 F賞,'+count[6]+'次 G賞'+' ]'};
+	} else if (trigger.match('列表')!=null){
+		for (i=1;i<100000;i++) {
+			stringTemp = weightedRandom(items, itemsWeight);
+			for (j=0;j<items.length;j++)
+				if (stringTemp == items[j]) {
+					count[j]++;
+					break;
+				}
+			if (stringTemp == items[0]) break;
+		}
+		return {"type":"flex","altText":"This is a Flex Message","contents":{"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"小瑪莉結果","weight":"bold","color":"#1DB446","size":"sm"},{"type":"text","text":"中獎啦","weight":"bold","size":"xxl","margin":"md"},{"type":"separator","margin":"xxl"},{"type":"box","layout":"vertical","margin":"xxl","spacing":"sm","contents":[{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"A賞(0.01%)","size":"sm","color":"#555555","flex":0},{"type":"text","text":1,"size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"B賞(0.99％)","size":"sm","color":"#555555","flex":0},{"type":"text","text":count[1],"size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"C賞(1.5％)","size":"sm","color":"#555555","flex":0},{"type":"text","text":count[2],"size":"sm","color":"#111111","align":"end"}]},		{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"D賞(2.5％)","size":"sm","color":"#555555","flex":0},	{"type":"text","text":count[3],"size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"E賞(3％)","size":"sm","color":"#555555","flex":0},{"type":"text","text":count[4],"size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"F賞(5％)","size":"sm","color":"#555555","flex":0},{"type":"text","text":count[5],"size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"G賞(87％)","size":"sm","color":"#555555","flex":0},{"type":"text","text":count[6],"size":"sm","color":"#111111","align":"end"}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"總計","size":"sm","color":"#555555"},{"type":"text","text":i.toString(),"size":"sm","color":"#111111","align":"end"}]}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"md","contents":[{"type":"text","text":"PAYMENT ID","size":"xs","color":"#aaaaaa","flex":0},{"type":"text","text":"#743289384279","color":"#aaaaaa","size":"xs","align":"end"}]}]}}}
 	} else if (trigger.match('單抽')!=null){
 		return {'type':'text', 'text': weightedRandom(items, itemsWeight)};
 	} else {
