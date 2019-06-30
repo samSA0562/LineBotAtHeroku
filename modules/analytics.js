@@ -92,7 +92,7 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	if (trigger.match(/運氣|運勢/) != null) return exports.funny.randomLuck(mainMsg) ; //占卜運氣		
 	if (trigger.match(/幹話|江西話|榦話/) != null) return exports.SA_Script.BaKaLanguage(trigger);
 	if (trigger.match(/小瑪莉/) != null) return exports.SA_Script.XiaoMary(userId, trigger);
-	if (trigger.match(/車欠骨豊|車欠骨豐|軟體/) != null) return {type:"text", text:"你是在叫初音嗎？真可惜我並不是。"};
+	//if (trigger.match(/車欠骨豊|車欠骨豐|軟體/) != null) return {type:"text", text:"你是在叫初音嗎？真可惜我並不是。"};
 	if (exports.SA_Script.textIsNeedReply(sourceId, trigger)) 
 	{
 		if (Math.floor(Math.random()*100) <= 87) //87%機率重覆回話)
@@ -100,9 +100,10 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 		else
 			return exports.funny.BStyleFlagSCRIPTS(); 
 	}
-	if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
+	//if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
 	if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
-	return exports.SA_Script.otherParse(inputStr);
+	return exports.SA_Script.analytics(trigger,inputStr)
+	//return exports.SA_Script.otherParse(inputStr);
 	/*tarot 指令
 	if (trigger.match(/猜拳/) != null) {
 		return RockPaperScissors(inputStr, mainMsg[1]);
@@ -114,7 +115,7 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 
 function parseInputSticker(sourceId, rplyToken, stickerId, packageId) {
 	if (Math.floor(Math.random()*100) <= 30) //30%機率貼圖)
-		if (stickerId == 3352108 && packageId == 1081469) return exports.SA_Script.stickerShruggie();
+		if (stickerId == 3352108 && packageId == 1081469) return exports.SA_Script.imageMessage('SSYT')
 }
 function InitializeAllSheetsData(Data, Sheet, auth) {
 	//console.log("analytics pass sheet");

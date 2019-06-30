@@ -279,6 +279,180 @@ function SuikaEcho() {
 	return rply 
 }
 
+function imageMessage(mode) {
+	rply.type = 'image'
+	let rplyImage =''
+	switch(mode) {
+		case 'suika':	//我婆
+			rplyImage = 'https://i.imgur.com/UGFJTbN.jpg'
+			break
+		case 'SSYT':	//雙手一攤
+			rplyImage = 'https://i.imgur.com/LU1m6K5.jpg'
+			break
+	}
+	rply.originalContentUrl = rply.previewImageUrl = rplyImage
+	return rply
+}
+
+function createPerson(mode) {
+//"type":"flex","altText":"Fap Fap Fap...","contents":{}	
+	let rply = {type:'flex',altText:'Fap Fap Fap...'}
+	let numMin = 1
+	let numMax = 10
+	let numRandomIndex = 0
+	let numTarget = numMin + Math.floor(Math.random()*(numMax-numMin))
+
+	let arrElementTag = [
+	]
+//個性
+	let arrPersonality = [
+		'自大', '怯懦', '貪婪', '邊緣', '弱智', '幹話', '不貞', '不忠', '清掃', '邪術', '無禮', '大聲', '黑洞', '多疑', '放空', '怠惰', 
+		'歡笑', '大愛', '沒品', '浪漫', '信仰', '黑人', '膽小', '歡愉', '空虛', '信教', '路癡', '放空', '炫富', '蠢蛋', '睡眠', '空洞', 
+		'音樂', '笨蛋', '閒晃', '厭惡', '粗暴', '拉屎', '自戀', '邋塌', '大頭症', '不可靠', '反社會', 
+		'強迫症', '妄想症', 
+		'不知所措', '無理取鬧', '搖擺不定', '說謊成性', '歇斯底里', '精神分裂', '五臟六腑', '令人反胃', '為了國王', 
+		'天生的蠢材', 
+	]
+//社交
+	let arrWork = [
+		'現充', '社畜', '吃土', '加班', '課金', '通勤', '單身', 
+		'被二一', '重補修', '沒事做', '邊緣人'
+	]
+//物質
+	let arrMaterial = [
+		'濁液', '鼻涕', '肥油', '珍珠', '黴菌', '塑膠', '口水', '膝蓋', '檸檬', '農藥', '謎團', '果凍', '草包', '洗澡', '熱狗', '胖子', 
+		'汙垢', '汗水', '淚水', '大麻', '奈米', '毒品', '蒸蚌', '爐渣', '怪獸', '兔肉', '煉乳', 
+		'重金屬', '銅臭味', '組織液', '空荷包', '中年禿', '鮪魚肚', '土豆粉', '矮冬瓜',
+		'魑魅魍魎', '意大利麵', '雪明炭鐵', 
+	]
+//Meme
+	let arrMeme = [
+		'貓咪', '彩虹', '人品', '晶礦', '貓派', '犬派', '奴性', '星爆', '珍奶', '假的', 
+		'發大財', '八萬一', '空心菜', '大葛格', 
+		'五倍鑽石', '兔子便便', '珍珠奶茶', '五顏六色', '諾羅病毒', 
+	]
+//奶子
+	let arrAdult = [
+		'尻尻', '髒髒', '老婆', '妹子', '公車', '胸部', '裸體', '奶子', '胖次', '內褲', '歐派', 
+		'大歐派', '老司機', '粉紅色', 
+		'為了奶子', '為了胸部', 'ㄋㄟㄋㄟ', 
+	]
+	if (!mode || mode.match(/個性|性格/) != null) arrElementTag = arrElementTag.concat(arrPersonality)
+	if (!mode || mode.match(/社交|社畜|工作/) != null) arrElementTag = arrElementTag.concat(arrWork)
+	if (!mode || mode.match(/原料|材料/) != null) arrElementTag = arrElementTag.concat(arrMaterial)
+	if (!mode || mode.match(/迷因|爆紅/) != null) arrElementTag = arrElementTag.concat(arrMeme)
+	if (!mode || mode.match(/奶子|ㄋㄟ|歐派|18|成人/) != null) arrElementTag = arrElementTag.concat(arrAdult)
+
+	let arrRplyElementSource = []
+	let arrRplyElementContents = []
+	
+	for (i=0;i<numTarget;i++) {
+		numRandomIndex = Math.floor(Math.random()*arrElementTag.length)
+		arrRplyElementSource.push({text:arrElementTag[numRandomIndex]})
+		arrElementTag.splice(numRandomIndex,1)
+	}
+	let numTotal = 100 - numTarget
+	let numValue = 0
+	arrRplyElementSource.forEach((value,index)=>{
+		if (index != arrRplyElementSource.length - 1) {
+			numValue = Math.floor(Math.random()*numTotal)
+			value.value = numValue + 1
+			numTotal -= numValue
+		} else {
+			value.value = numTotal + 1
+		}
+	})
+	arrRplyElementSource = quickSort(arrRplyElementSource)
+	let arrColorType = ['#FF0000','#F0E68C','#1E90FF','#32CD32','#555555', '#999999', '#aaaaaa']
+	let arrSizeType = ['xl', 'lg', 'md', 'sm', 'xs',]
+	let strColorType = ''
+	let strSizeType = ''
+	arrRplyElementSource.forEach((value) => {
+		if (value.value > 80) {
+				strColorType = arrColorType[0]
+				strSizeType = arrSizeType[0]
+		} else if (value.value > 60) {
+				strColorType = arrColorType[1]
+				strSizeType = arrSizeType[1]
+		} else if (value.value > 40) {
+				strColorType = arrColorType[2]
+				strSizeType = arrSizeType[2]
+		} else if (value.value > 15) {
+				strColorType = arrColorType[3]
+				strSizeType = arrSizeType[3]
+		} else if (value.value > 7) {
+			strColorType = arrColorType[4]
+			strSizeType = arrSizeType[4]
+		}  else if (value.value > 3) {
+			strColorType = arrColorType[5]
+			strSizeType = arrSizeType[4]
+		} else {
+			strColorType = arrColorType[6]
+			strSizeType = arrSizeType[4]
+		}
+		arrRplyElementContents.push({
+				type:"box",layout:"horizontal",contents:[
+						{
+								type:"text","text":value.text,size:strSizeType,color:strColorType,flex:0
+						},
+						{
+								type:"text","text":value.value.toString(),size:strSizeType,color:"#111111",align:"end"
+						}
+				]
+		})
+	})
+
+  rply.contents = {"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[
+    {"type":"text","text":"一生組成成分","weight":"bold","size":"xxl","margin":"md","align":"center"},
+    {"type":"separator","margin":"md"},
+    {"type":"box","layout":"vertical","margin":"md","spacing":"sm","contents":arrRplyElementContents},
+    {"type":"separator","margin":"md"},
+    {"type":"box","layout":"horizontal","margin":"md","contents":[
+    {"type":"text","text":"單號","size":"xs","color":"#aaaaaa","flex":0},
+    {"type":"text","text":`#2133${Math.floor(Math.random()*1000)}1092${Math.floor(Math.random()*1000)}5100`,"color":"#aaaaaa","size":"xs","align":"end"}]}
+    ]}}
+
+	return rply
+
+	function quickSort(arrMain){
+			return quickSortInside(arrMain, 0, arrMain.length - 1)
+	
+			function swap(arrSwap, idxLeft , idxRight) {
+					[arrSwap[idxLeft], arrSwap[idxRight]] = [arrSwap[idxRight], arrSwap[idxLeft]]
+			}
+			function partition(arrPart, numStart, numEnd) {
+					let idxSplit = numStart + 1;
+					for (let i = numStart + 1; i <= numEnd; i++) {
+							if (arrPart[i].value > arrPart[numStart].value) {
+									swap(arrPart, i, idxSplit)
+									idxSplit++
+							}
+					}
+	
+					swap(arrPart, numStart, idxSplit - 1)
+					return idxSplit - 1
+			}
+			function quickSortInside(arrInside, numStart, numEnd) {
+					if (numStart >= numEnd) return arrInside
+	
+					const middle = partition(arrInside, numStart, numEnd)
+					quickSortInside(arrInside, numStart, middle - 1)
+					quickSortInside(arrInside, middle + 1, numEnd)
+					return arrInside
+			}
+	}
+}
+
+function analytics(trigger, inputStr) {
+	if (trigger.match(/蘇卡|醋咔|酥卡/) != null && trigger.match(/聲音|身音/) != null) {
+		return imageMessage('suika')
+	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
+		return createPerson()
+	} else {
+		return otherParse(inputStr)
+	}
+}
+
 function flexMessage(mode) {
 	switch (mode) {
 		case '醬油尻':
@@ -300,4 +474,6 @@ module.exports = {
 	XiaoMary,
 	otherParse,
 	flexMessage,
+	imageMessage,
+	analytics,
 };

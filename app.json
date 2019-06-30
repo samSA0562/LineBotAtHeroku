@@ -1,8 +1,8 @@
 {
-	"name": "RoboYabaso TrpgLineBot",
-	"description": "簡單的、模組化的TrpgLineBot",
-	"repository": "https://github.com/zeteticl/RoboYabaso.git",
-	"keywords": ["RoboYabaso", "Line Bot", "TRPG"],
+	"name": "SA LineBot",
+	"description": "簡單的、模組化的LineBot",
+	"repository": "https://github.com/samSA0562/LineBotAtHeroku.git",
+	"keywords": ["SA", "Line Bot"],
 	"env": {
 		"LINE_CHANNEL_SECRET": {
 			"description": "LINE_Channel_Secret"
