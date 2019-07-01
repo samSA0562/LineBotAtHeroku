@@ -463,7 +463,6 @@ function createPerson(mode) {
 
 function flexMessage(mode) {
 	rply = {type:"flex"}
-	console.log(mode)
 	if ( mode.match(/醬油/) != null ) {
 		rply.altText = '醬油 : Fap Fap Fap... '
 		rply.contents = {"type":"carousel","contents":[{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/4rmbE.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"陳年老醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"495","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","action":{"type":"uri","label":"我她媽","uri":"https://i.imgur.com/4rmbE.jpg"}},{"type":"button","action":{"type":"uri","label":"射爆","uri":"https://i.imgur.com/4rmbE.jpg"}}]}},{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/8o3jJ.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"小蘿莉醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","flex":1,"contents":[{"type":"text","text":"6","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]},{"type":"text","text":"晶礦不足","wrap":true,"size":"xxs","margin":"md","color":"#ff5551","flex":0}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":2,"style":"primary","color":"#aaaaaa","action":{"type":"uri","label":"惡作劇","uri":"https://i.imgur.com/8o3jJ.jpg"}},{"type":"button","action":{"type":"uri","label":"尻尻","uri":"https://i.imgur.com/8o3jJ.jpg"}}]}},{"type":"bubble","body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":1,"gravity":"center","action":{"type":"uri","label":"幫我撐十秒","uri":"https://i.imgur.com"}}]}}]}
@@ -478,7 +477,7 @@ function flexMessage(mode) {
 }
 
 function weatherMessage(trigger) {
-	rply = {type: "carousel"}
+	rply = {type: "flex", altText: "我最愛看著天氣 Fap Fap Fap...", contents: "carousel"}
 	let arrLocationNameTW = [
 		'%E5%AE%9C%E8%98%AD%E7%B8%A3', //宜蘭縣
 		'%E8%8A%B1%E8%93%AE%E7%B8%A3', //花蓮縣
@@ -525,7 +524,6 @@ function weatherMessage(trigger) {
 	else if ( trigger.match(/嘉義縣|嘉義/) != null  ) strLocationName = arrLocationNameTW[18]
 	else if ( trigger.match(/屏東/) != null  ) strLocationName = arrLocationNameTW[20]
 	else strLocationName = arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]
-	console.log(strLocationName)
 	request({
 		uri: `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&limit=1&offset=0&format=JSON&locationName=${strLocationName}`,
 		method: "GET",
@@ -594,8 +592,6 @@ function weatherMessage(trigger) {
 				}
 		})
 		rply.contents = arrRplyContents
-		console.log('rply')
-		console.log(rply)
 		return rply
 	});
 }
