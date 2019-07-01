@@ -22,7 +22,7 @@ function analytics(trigger, inputStr) {
 	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
 		return createPerson()
 	} else if (trigger.match(/天氣/) != null ) {
-		weatherMessage(trigger).then((reply)=>{ console.log(reply); return reply })
+		weatherMessage(trigger).then((reply)=>{ return reply })
 	} else {
 		return otherParse(inputStr)
 	}

@@ -72,6 +72,8 @@ app.post('/', jsonParser, function(req, res) {
 	//如希望增加修改骰組,只要修改analytics.js的條件式 和ROLL內的骰組檔案即可,然後在HELP.JS 增加說明.
 	try {
 		rplyVal = handleEvent(event);
+		console.log('trace 1')
+		console.log(rplyVal)
 	} 
 	catch(e) {
 		console.log('catch error');
