@@ -523,7 +523,7 @@ function weatherMessage(trigger) {
 	else if ( trigger.match(/嘉義縣|嘉義/) != null  ) strLocationName = arrLocationNameTW[18]
 	else if ( trigger.match(/屏東/) != null  ) strLocationName = arrLocationNameTW[20]
 	else strLocationName = arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]
-	
+	console.log(strLocationName)
 	request({
 		uri: `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&limit=1&offset=0&format=JSON&locationName=${strLocationName}`,
 		method: "GET",
@@ -592,6 +592,7 @@ function weatherMessage(trigger) {
 				}
 		})
 		rply.contents = arrRplyContents
+		console.log('rply')
 		return rply
 	});
 }
