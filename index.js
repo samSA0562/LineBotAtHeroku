@@ -71,7 +71,7 @@ app.post('/', jsonParser, function(req, res) {
 	//訊息來到後, 會自動呼叫handleEvent 分類,然後跳到analytics.js進行骰組分析
 	//如希望增加修改骰組,只要修改analytics.js的條件式 和ROLL內的骰組檔案即可,然後在HELP.JS 增加說明.
 	try {
-		rplyVal = handleEvent(event);
+		handleEvent(event).then((rply)=>{rplyVal=rply});
 		console.log('trace 1')
 		console.log(rplyVal)
 	} 
@@ -153,7 +153,7 @@ app.use(function(err, req, res, next) {
 app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
 });
-function handleEvent(event) {
+async function handleEvent(event) {
 	let sourceId;
 	switch (event.source.type) {
 	case 'user':

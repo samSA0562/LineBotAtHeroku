@@ -12,8 +12,8 @@ var googleAuthData;
 var items=["A賞(0.01％) ", "B賞(0.99％)", "C賞(1.5％)", "D賞(2.5％)", "E賞(3％)" , "F賞(5％)", "G賞(87％)"];
 var itemsWeight=[1, 99, 150, 250, 300, 500, 8700];
 
-function analytics(trigger, inputStr) {
-	console.log('=== analytics from SA_Script ===')
+async function analytics(trigger, inputStr) {
+	console.log('=== Start analytics from SA_Script ===')
 	console.log(trigger)
 	if (trigger.match(/蘇卡|醋咔|酥卡/) != null && trigger.match(/聲音|身音/) != null) {
 		return imageMessage('suika')
@@ -26,6 +26,7 @@ function analytics(trigger, inputStr) {
 	} else {
 		return otherParse(inputStr)
 	}
+	console.log('=== End analytics from SA_Script ===')
 }
 
 function BaKaLanguage(trigger)

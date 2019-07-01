@@ -11,7 +11,7 @@ var ReplyCount = 0; //跟上回話用全域變數_整數
 var ReplyString;    //跟上回話用全域變數_字串
 //用來呼叫骰組,新增骰組的話,要寫條件式到下面呼叫 
 //格式是 exports.骰組檔案名字.function名
-function parseInputText(sourceId, userId, rplyToken, inputStr) {
+async function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	//console.log('InputStr: ' + inputStr);
 	_isNaN = function(obj) 	{
 	return isNaN(parseInt(obj));  
@@ -104,8 +104,11 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	}
 	//if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
 	//if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
-	let rplyMsg = exports.SA_Script.analytics(trigger,inputStr)
-	if (rplyMsg) return rplyMsg
+	exports.SA_Script.analytics(trigger,inputStr).then((rply)=>{
+		rplyMsg = rply
+		if (rplyMsg) return rplyMsg
+	})
+	
 	//return exports.SA_Script.otherParse(inputStr);
 	/*tarot 指令
 	if (trigger.match(/猜拳/) != null) {
