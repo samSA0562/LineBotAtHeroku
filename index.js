@@ -71,7 +71,7 @@ app.post('/', jsonParser, function(req, res) {
 	//訊息來到後, 會自動呼叫handleEvent 分類,然後跳到analytics.js進行骰組分析
 	//如希望增加修改骰組,只要修改analytics.js的條件式 和ROLL內的骰組檔案即可,然後在HELP.JS 增加說明.
 	try {
-	rplyVal = handleEvent(event);
+		rplyVal = handleEvent(event);
 	} 
 	catch(e) {
 		console.log('catch error');
@@ -79,7 +79,8 @@ app.post('/', jsonParser, function(req, res) {
 	}
 	//把回應的內容,掉到MsgToLine.js傳出去
 	if (rplyVal) {
-	exports.MsgToLine.replyMsgToLine(rplyToken, rplyVal, rplyOptions); 
+		console.log(rplyVal)
+		exports.MsgToLine.replyMsgToLine(rplyToken, rplyVal, rplyOptions); 
 	} else {
 	//console.log('Do not trigger'); 
 	}

@@ -20,7 +20,7 @@ function analytics(trigger, inputStr) {
 	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
 		return createPerson()
 	} else if ( mode.match(/天氣/) != null ) {
-			return weatherMessage(mode)
+		return weatherMessage(mode)
 	} else {
 		return otherParse(inputStr)
 	}
@@ -591,6 +591,7 @@ function weatherMessage(trigger) {
 				}
 		})
 		rply.contents.contents = arrRplyContents
+		console.log(rply)
 		return rply
 	});
 }
