@@ -595,6 +595,7 @@ function weatherMessage(trigger) {
 		})
 		rply.contents = arrRplyContents
 		console.log('rply')
+		console.log(rply)
 		return rply
 	});
 }
