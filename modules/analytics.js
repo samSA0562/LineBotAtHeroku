@@ -104,10 +104,8 @@ async function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	}
 	//if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
 	//if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
-	exports.SA_Script.analytics(trigger,inputStr).then((rply)=>{
-		rplyMsg = rply
-		if (rplyMsg) return rplyMsg
-	})
+	rplyMsg = exports.SA_Script.analytics(trigger,inputStr)
+	if (rplyMsg) return rplyMsg
 	
 	//return exports.SA_Script.otherParse(inputStr);
 	/*tarot 指令
