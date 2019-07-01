@@ -22,7 +22,7 @@ function analytics(trigger, inputStr) {
 	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
 		return createPerson()
 	} else if (trigger.match(/天氣/) != null ) {
-		return weatherMessage(trigger)
+		weatherMessage(trigger).then((reply)=>{ return reply })
 	} else {
 		return otherParse(inputStr)
 	}
@@ -524,78 +524,82 @@ function weatherMessage(trigger) {
 	else if ( trigger.match(/嘉義市/) != null  ) strLocationName = arrLocationNameTW[19]	
 	else if ( trigger.match(/嘉義縣|嘉義/) != null  ) strLocationName = arrLocationNameTW[18]
 	else if ( trigger.match(/屏東/) != null  ) strLocationName = arrLocationNameTW[20]
-	else strLocationName = arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]
-	request({
-		uri: `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&limit=1&offset=0&format=JSON&locationName=${strLocationName}`,
-		method: "GET",
-		timeout: 10000,
-		followRedirect: true,
-		maxRedirects: 3
-	}, function(error, response, body) {
-		body = JSON.parse(body)
-		let weatherElement = body.records.location[0].weatherElement
+    else strLocationName = arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]
+    
+    return fetch(`https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&limit=1&offset=0&format=JSON&locationName=${strLocationName}`, {
+        method: 'GET',
+        redirect: 'follow',
+        timeout: 0,
+    }).then((response) => {
+        // 可以透過 blob(), json(), text() 轉成可用的資訊
+        return response.json(); 
+    }).then((body) => {
+        let weatherElement = body.records.location[0].weatherElement
 		let arrTime = [`${weatherElement[0].time[0].startTime}-${weatherElement[0].time[0].endTime}`,`${weatherElement[0].time[1].startTime}-${weatherElement[0].time[1].endTime}`,`${weatherElement[0].time[2].startTime}-${weatherElement[0].time[2].endTime}`,]
 		let arrMaxT = []
 		let arrMinT = []
 		let arrWx = []
 		let arrCI = []
 		let arrPoP = []
-		let arrRplyContents = [{},{},{}]
-		weatherElement.forEach((value)=>{
-				switch (value.elementName) {    
-						case 'MaxT': // 最高溫度
-								for(i=0;i<value.time.length;i++) arrMaxT.push(value.time[i].parameter)
-								break
-						case 'MinT': // 最低溫度
-								for(i=0;i<value.time.length;i++) arrMinT.push(value.time[i].parameter)
-								break
-						case 'Wx': // 天氣現象
-								for(i=0;i<value.time.length;i++) arrWx.push(value.time[i].parameter)
-								break
-						case 'CI': // 舒適度
-								for(i=0;i<value.time.length;i++) arrCI.push(value.time[i].parameter)
-								break
-						case 'PoP': // 降雨機率
-								for(i=0;i<value.time.length;i++) arrPoP.push(value.time[i].parameter)
-								break
-				}
-		})
-		arrRplyContents.forEach((value,index)=>{
-				let tempTime = []
-				arrTime[index].split('-').forEach((value)=>{
-						tempTime=tempTime.concat(value.split(' '))
-				})
-				value.type = "bubble"
-				value.body = {type: "box",layout: "vertical",spacing: "sm",contents: [
-						{type:"text",text:`民國 ${Number(tempTime[0])-1911} 年 ${tempTime[1]} 月 ${tempTime[2]} 日`,weight:"bold",align:"center",size:"xl"},
-						{type:"text",text:`${tempTime[tempTime.length/2-1]} 至 ${tempTime[tempTime.length-1]}`,weight:"bold",align:"center",size:'md'},
-						{type: "separator",margin: "md"},
-						{type: "box",layout: "horizontal",contents: [
-								{type: "text",text: "溫度",size: 'md',color: "#555555",flex: 0},
-								{type: "text",text: `${arrMinT[index].parameterName}°${arrMaxT[index].parameterUnit} ~ ${arrMaxT[index].parameterName}°${arrMaxT[index].parameterUnit}`,size: 'md',color: "#555555",align: "end"} ] },
-						{type: "box",layout: "horizontal",contents: [
-								{type: "text",text: "降雨率",size: 'md',color: "#555555",flex: 0},
-								{type: "text",text: `${arrPoP[index].parameterName} ${arrPoP[index].parameterUnit=='百分比'&&'%'}`,size: 'md',color: "#555555",align: "end"} ] },
-						{type: "box",layout: "horizontal",contents: [
-								{type: "text",text: "舒適度",size: 'md',color: "#555555",flex: 0},
-								{type: "text",text: `${arrCI[index].parameterName}`,size: 'md',color: "#555555",align: "end"} ] },
-						{type: "box",layout: "horizontal",contents: [
-								{type: "text",text: "天氣現象",size: arrWx[index].parameterName.length > 8?'xs':'md',color: "#555555",flex: 0},
-								{type: "text",text: `${arrWx[index].parameterName}`,size: arrWx[index].parameterName.length > 8?'xs':'md',color: "#555555",align: "end"} ] },
+        let arrRplyContents = [{},{},{}]
+        
+        weatherElement.forEach((value)=>{
+            switch (value.elementName) {    
+            case 'MaxT': // 最高溫度
+                for(i=0;i<value.time.length;i++) arrMaxT.push(value.time[i].parameter)
+                break
+            case 'MinT': // 最低溫度
+                for(i=0;i<value.time.length;i++) arrMinT.push(value.time[i].parameter)
+                break
+            case 'Wx': // 天氣現象
+                for(i=0;i<value.time.length;i++) arrWx.push(value.time[i].parameter)
+                break
+            case 'CI': // 舒適度
+                for(i=0;i<value.time.length;i++) arrCI.push(value.time[i].parameter)
+                break
+            case 'PoP': // 降雨機率
+                for(i=0;i<value.time.length;i++) arrPoP.push(value.time[i].parameter)
+                break
+            }
+        })
+        arrRplyContents.forEach((value,index)=>{
+            let tempTime = []
+            arrTime[index].split('-').forEach((value)=>{
+                    tempTime=tempTime.concat(value.split(' '))
+            })
+            value.type = "bubble"
+            value.body = {type: "box",layout: "vertical",spacing: "sm",contents: [
+                    {type:"text",text:`民國 ${Number(tempTime[0])-1911} 年 ${tempTime[1]} 月 ${tempTime[2]} 日`,weight:"bold",align:"center",size:"xl"},
+                    {type:"text",text:`${tempTime[tempTime.length/2-1]} 至 ${tempTime[tempTime.length-1]}`,weight:"bold",align:"center",size:'md'},
+                    {type: "separator",margin: "md"},
+                    {type: "box",layout: "horizontal",contents: [
+                            {type: "text",text: "溫度",size: 'md',color: "#555555",flex: 0},
+                            {type: "text",text: `${arrMinT[index].parameterName}°${arrMaxT[index].parameterUnit} ~ ${arrMaxT[index].parameterName}°${arrMaxT[index].parameterUnit}`,size: 'md',color: "#555555",align: "end"} ] },
+                    {type: "box",layout: "horizontal",contents: [
+                            {type: "text",text: "降雨率",size: 'md',color: "#555555",flex: 0},
+                            {type: "text",text: `${arrPoP[index].parameterName} ${arrPoP[index].parameterUnit=='百分比'&&'%'}`,size: 'md',color: "#555555",align: "end"} ] },
+                    {type: "box",layout: "horizontal",contents: [
+                            {type: "text",text: "舒適度",size: 'md',color: "#555555",flex: 0},
+                            {type: "text",text: `${arrCI[index].parameterName}`,size: 'md',color: "#555555",align: "end"} ] },
+                    {type: "box",layout: "horizontal",contents: [
+                            {type: "text",text: "天氣現象",size: arrWx[index].parameterName.length > 8?'xs':'md',color: "#555555",flex: 0},
+                            {type: "text",text: `${arrWx[index].parameterName}`,size: arrWx[index].parameterName.length > 8?'xs':'md',color: "#555555",align: "end"} ] },
 
-				] }
-				value.footer = {type:"box",layout:"vertical",spacing:"sm",contents: [
-						{type: "separator",margin: "md"},
-						{type: "box",layout: "horizontal",margin: "md",contents: [
-								{type: "text",text: "位置",size: "xs",color: "#aaaaaa",flex: 0},
-								{type: "text",text: `中華民國臺灣省${body.records.location[0].locationName}`,color: "#aaaaaa",size: "xs",align: "end"} ] }
-						]
-				}
-		})
-		reply.contents.contents = arrRplyContents
-		console.log(JSON.stringify(reply))
-		return reply
-	});
+            ] }
+            value.footer = {type:"box",layout:"vertical",spacing:"sm",contents: [
+                    {type: "separator",margin: "md"},
+                    {type: "box",layout: "horizontal",margin: "md",contents: [
+                            {type: "text",text: "位置",size: "xs",color: "#aaaaaa",flex: 0},
+                            {type: "text",text: `中華民國臺灣省${body.records.location[0].locationName}`,color: "#aaaaaa",size: "xs",align: "end"} ] }
+                    ]
+            }
+        })
+        reply.contents.contents = arrRplyContents
+        return reply
+    }).catch((err) => {
+        console.log('錯誤:', err);
+        return {type:'text',text:'異常…異常……異…常……為了部落！！'}
+    });
 }
 
 module.exports = {

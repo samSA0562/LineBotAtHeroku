@@ -10,12 +10,13 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "async": "2.6.1",
+    "async": "^2.6.2",
     "body-parser": "1.15.2",
     "cloudinary": "",
     "express": "4.13.3",
     "google-auth-library": "2.0.1",
     "googleapis": "36.0.0",
+    "node-fetch": "^2.6.0",
     "request": "^2.88.0"
   },
   "keywords": [
