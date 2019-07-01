@@ -1,14 +1,28 @@
-var rply ={type : 'text'}; //type是必需的,但可以更改
-var ReplyString,   //跟上回話用全域變數_字串
-	ReplyCount=0;
-var SDMDSheet_BakaLang = [];
-var Sheet_MsgSourceLog = [];
+const {google} = require('googleapis')
+const request = require('request')  
+const tokenCWB = process.env.CWB_ACCESSTOKEN
+
+var rply ={type : 'text'} //type是必需的,但可以更改
+var ReplyString   //跟上回話用全域變數_字串
+var ReplyCount=0
+var SDMDSheet_BakaLang = []
+var Sheet_MsgSourceLog = []
 var googleAuthData;
 
 var items=["A賞(0.01％) ", "B賞(0.99％)", "C賞(1.5％)", "D賞(2.5％)", "E賞(3％)" , "F賞(5％)", "G賞(87％)"];
 var itemsWeight=[1, 99, 150, 250, 300, 500, 8700];
 
-const {google} = require('googleapis');
+function analytics(trigger, inputStr) {
+	if (trigger.match(/蘇卡|醋咔|酥卡/) != null && trigger.match(/聲音|身音/) != null) {
+		return imageMessage('suika')
+	} else if (trigger.match(/尻/) != null) {
+		return flexMessage(trigger)
+	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
+		return createPerson()
+	} else {
+		return otherParse(inputStr)
+	}
+}
 
 function BaKaLanguage(trigger)
 {
@@ -307,9 +321,9 @@ function createPerson(mode) {
 //個性
 	let arrPersonality = [
 		'自大', '怯懦', '貪婪', '邊緣', '弱智', '幹話', '不貞', '不忠', '清掃', '邪術', '無禮', '大聲', '黑洞', '多疑', '放空', '怠惰', 
-		'歡笑', '大愛', '沒品', '浪漫', '信仰', '黑人', '膽小', '歡愉', '空虛', '信教', '路癡', '放空', '炫富', '蠢蛋', '睡眠', '空洞', 
-		'音樂', '笨蛋', '閒晃', '厭惡', '粗暴', '拉屎', '自戀', '邋塌', '大頭症', '不可靠', '反社會', 
-		'強迫症', '妄想症', 
+		'歡笑', '大愛', '沒品', '浪漫', '信仰', '黑人', '膽小', '歡愉', '空虛', '信教', '路癡', '放空', '炫富', '蠢蛋', '睡眠', '空洞',
+		'中二',  '音樂', '笨蛋', '閒晃', '厭惡', '粗暴', '拉屎', '自戀', '邋塌', '留守', 
+		'大頭症', '不可靠', '反社會', '強迫症', '妄想症', 
 		'不知所措', '無理取鬧', '搖擺不定', '說謊成性', '歇斯底里', '精神分裂', '五臟六腑', '令人反胃', '為了國王', 
 		'天生的蠢材', 
 	]
@@ -334,7 +348,7 @@ function createPerson(mode) {
 //奶子
 	let arrAdult = [
 		'尻尻', '髒髒', '老婆', '妹子', '公車', '胸部', '裸體', '奶子', '胖次', '內褲', '歐派', 
-		'大歐派', '老司機', '粉紅色', 
+		'大歐派', '老司機', '粉紅色', '肉變器', 
 		'為了奶子', '為了胸部', 'ㄋㄟㄋㄟ', 
 	]
 	if (!mode || mode.match(/個性|性格/) != null) arrElementTag = arrElementTag.concat(arrPersonality)
@@ -342,6 +356,7 @@ function createPerson(mode) {
 	if (!mode || mode.match(/原料|材料/) != null) arrElementTag = arrElementTag.concat(arrMaterial)
 	if (!mode || mode.match(/迷因|爆紅/) != null) arrElementTag = arrElementTag.concat(arrMeme)
 	if (!mode || mode.match(/奶子|ㄋㄟ|歐派|18|成人/) != null) arrElementTag = arrElementTag.concat(arrAdult)
+	if (!arrElementTag[0]) return createPerson()
 
 	let arrRplyElementSource = []
 	let arrRplyElementContents = []
@@ -443,28 +458,39 @@ function createPerson(mode) {
 	}
 }
 
-function analytics(trigger, inputStr) {
-	if (trigger.match(/蘇卡|醋咔|酥卡/) != null && trigger.match(/聲音|身音/) != null) {
-		return imageMessage('suika')
-	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
-		return createPerson()
-	} else {
-		return otherParse(inputStr)
+function flexMessage(mode) {
+	rply = {type:"flex"}
+	if ( mode.match(/醬油/) != null ) {
+		rply.altText = '醬油 : Fap Fap Fap... '
+		rply.contents = {"type":"carousel","contents":[{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/4rmbE.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"陳年老醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"495","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","action":{"type":"uri","label":"我她媽","uri":"https://i.imgur.com/4rmbE.jpg"}},{"type":"button","action":{"type":"uri","label":"射爆","uri":"https://i.imgur.com/4rmbE.jpg"}}]}},{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/8o3jJ.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"小蘿莉醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","flex":1,"contents":[{"type":"text","text":"6","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]},{"type":"text","text":"晶礦不足","wrap":true,"size":"xxs","margin":"md","color":"#ff5551","flex":0}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":2,"style":"primary","color":"#aaaaaa","action":{"type":"uri","label":"惡作劇","uri":"https://i.imgur.com/8o3jJ.jpg"}},{"type":"button","action":{"type":"uri","label":"尻尻","uri":"https://i.imgur.com/8o3jJ.jpg"}}]}},{"type":"bubble","body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":1,"gravity":"center","action":{"type":"uri","label":"幫我撐十秒","uri":"https://i.imgur.com"}}]}}]}
+	} else if ( mode.match(/彈性/) != null ) {
+		rply.altText = 'Fap Fap Fap...'
+		rply.contents = {"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"當前狀態","weight":"bold","color":"#1DB446","size":"sm"},{"type":"text","text":"機台名稱","weight":"bold","size":"xxl","margin":"md"},{"type":"text","text":"機台位置","size":"xs","color":"#aaaaaa","wrap":true},{"type":"separator","margin":"xxl"},{"type":"box","layout":"vertical","margin":"xxl","spacing":"sm","contents":[{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"執行時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"90分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"待機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"20分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"停機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"3分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"xxl","contents":[{"type":"text","text":"完工次數","size":"sm","color":"#555555"},{"type":"text","text":"3","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"稼動率","size":"sm","color":"#555555"},{"type":"text","text":"13%","size":"sm","color":"#111111","align":"end"}]}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"md","contents":[{"type":"text","text":"索取時間","size":"xs","color":"#aaaaaa","flex":0},{"type":"text","text":"YYYY/MM/DD HH:mm:ss","color":"#aaaaaa","size":"xs","align":"end"}]}]}}
+	} else if ( mode.match(/天氣/) != null ) {
+		rply.altText = '我最愛看著天氣 Fap Fap Fap...'
+		return weatherMessage(mode)
 	}
+	return rply
 }
 
-function flexMessage(mode) {
-	switch (mode) {
-		case '醬油尻':
-			return {"type":"flex","altText":"Fap Fap Fap...","contents":{"type":"carousel","contents":[{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/4rmbE.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"陳年老醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"495","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","action":{"type":"uri","label":"我她媽","uri":"https://i.imgur.com/4rmbE.jpg"}},{"type":"button","action":{"type":"uri","label":"射爆","uri":"https://i.imgur.com/4rmbE.jpg"}}]}},{"type":"bubble","hero":{"type":"image","size":"full","aspectRatio":"20:13","aspectMode":"cover","url":"https://i.imgur.com/8o3jJ.jpg"},"body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"text","text":"小蘿莉醬油","wrap":true,"weight":"bold","size":"xl"},{"type":"box","layout":"baseline","flex":1,"contents":[{"type":"text","text":"6","wrap":true,"weight":"bold","size":"xl","flex":0},{"type":"text","text":"才","wrap":true,"weight":"bold","size":"sm","flex":0}]},{"type":"text","text":"晶礦不足","wrap":true,"size":"xxs","margin":"md","color":"#ff5551","flex":0}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":2,"style":"primary","color":"#aaaaaa","action":{"type":"uri","label":"惡作劇","uri":"https://i.imgur.com/8o3jJ.jpg"}},{"type":"button","action":{"type":"uri","label":"尻尻","uri":"https://i.imgur.com/8o3jJ.jpg"}}]}},{"type":"bubble","body":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","flex":1,"gravity":"center","action":{"type":"uri","label":"幫我撐十秒","uri":"https://i.imgur.com"}}]}}]}}
-			break
-		case '彈性尻':
-			return {"type":"flex","altText":"Fap Fap Fap...","contents":{"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"當前狀態","weight":"bold","color":"#1DB446","size":"sm"},{"type":"text","text":"機台名稱","weight":"bold","size":"xxl","margin":"md"},{"type":"text","text":"機台位置","size":"xs","color":"#aaaaaa","wrap":true},{"type":"separator","margin":"xxl"},{"type":"box","layout":"vertical","margin":"xxl","spacing":"sm","contents":[{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"執行時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"90分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"待機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"20分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"停機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"3分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"xxl","contents":[{"type":"text","text":"完工次數","size":"sm","color":"#555555"},{"type":"text","text":"3","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"稼動率","size":"sm","color":"#555555"},{"type":"text","text":"13%","size":"sm","color":"#111111","align":"end"}]}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"md","contents":[{"type":"text","text":"索取時間","size":"xs","color":"#aaaaaa","flex":0},{"type":"text","text":"YYYY/MM/DD HH:mm:ss","color":"#aaaaaa","size":"xs","align":"end"}]}]}}}
-			break
-	}
-	return 
+function weatherMessage(trigger) {
+	request({
+			uri: `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&offset=0&format=JSON&locationName=${arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]}`,
+			method: "GET",
+			timeout: 10000,
+			followRedirect: true,
+			maxRedirects: 3
+	}, function(error, response, body) {
+			//console.log(error)
+			//console.log(response)
+			console.log(JSON.parse(body).records.location[0])
+		return {type:'text',text:body}
+	});
+	
 }
+
 module.exports = {
+	analytics,
 	BaKaLanguage,
 	textIsNeedReply,
 	ReplyMsg,
@@ -475,5 +501,5 @@ module.exports = {
 	otherParse,
 	flexMessage,
 	imageMessage,
-	analytics,
+	weatherMessage,
 };

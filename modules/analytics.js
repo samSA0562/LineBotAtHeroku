@@ -97,20 +97,21 @@ function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	{
 		if (Math.floor(Math.random()*100) <= 87) //87%機率重覆回話)
 			return exports.SA_Script.ReplyMsg(trigger); //重覆回話
-		else
+		else if (Math.floor(Math.random()*100) <= 50)
 			return exports.funny.BStyleFlagSCRIPTS(); 
+		else
+			return exports.funny.randomReply()
 	}
 	//if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
-	if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
-	return exports.SA_Script.analytics(trigger,inputStr)
+	//if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
+	let rplyMsg = exports.SA_Script.analytics(trigger,inputStr)
+	if (rplyMsg) return rplyMsg
 	//return exports.SA_Script.otherParse(inputStr);
 	/*tarot 指令
 	if (trigger.match(/猜拳/) != null) {
 		return RockPaperScissors(inputStr, mainMsg[1]);
 	}
-*/
-
-  
+*/  
 }
 
 function parseInputSticker(sourceId, rplyToken, stickerId, packageId) {
