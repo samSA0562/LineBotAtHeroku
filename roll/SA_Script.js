@@ -1,5 +1,5 @@
 const {google} = require('googleapis')
-const request = require('request')  
+const fetch = require('node-fetch')
 const tokenCWB = process.env.CWB_ACCESSTOKEN
 
 var rply ={type : 'text'} //type是必需的,但可以更改
