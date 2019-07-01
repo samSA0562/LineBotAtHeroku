@@ -478,7 +478,7 @@ function flexMessage(mode) {
 }
 
 function weatherMessage(trigger) {
-	rply = {type: "flex", altText: "我最愛看著天氣 Fap Fap Fap...", contents: {type:"carousel"} }
+	let reply = {type: "flex", altText: "我最愛看著天氣 Fap Fap Fap...", contents: {type:"carousel"} }
 	let arrLocationNameTW = [
 		'%E5%AE%9C%E8%98%AD%E7%B8%A3', //宜蘭縣
 		'%E8%8A%B1%E8%93%AE%E7%B8%A3', //花蓮縣
@@ -592,9 +592,9 @@ function weatherMessage(trigger) {
 						]
 				}
 		})
-		rply.contents.contents = arrRplyContents
-		console.log(rply)
-		return rply
+		reply.contents.contents = arrRplyContents
+		console.log(reply)
+		return reply
 	});
 }
 
