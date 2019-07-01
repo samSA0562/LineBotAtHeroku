@@ -79,6 +79,7 @@ app.post('/', jsonParser, function(req, res) {
 	}
 	//把回應的內容,掉到MsgToLine.js傳出去
 	if (rplyVal) {
+		console.log('=== rplyVal from index ===')
 		console.log(rplyVal)
 		exports.MsgToLine.replyMsgToLine(rplyToken, rplyVal, rplyOptions); 
 	} else {
