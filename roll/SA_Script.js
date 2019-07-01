@@ -19,6 +19,8 @@ function analytics(trigger, inputStr) {
 		return flexMessage(trigger)
 	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
 		return createPerson()
+	} else if ( mode.match(/天氣/) != null ) {
+			return weatherMessage(mode)
 	} else {
 		return otherParse(inputStr)
 	}
@@ -469,10 +471,7 @@ function flexMessage(mode) {
 	} else if ( mode.match(/彈性/) != null ) {
 		rply.altText = 'Fap Fap Fap...'
 		rply.contents = {"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"當前狀態","weight":"bold","color":"#1DB446","size":"sm"},{"type":"text","text":"機台名稱","weight":"bold","size":"xxl","margin":"md"},{"type":"text","text":"機台位置","size":"xs","color":"#aaaaaa","wrap":true},{"type":"separator","margin":"xxl"},{"type":"box","layout":"vertical","margin":"xxl","spacing":"sm","contents":[{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"執行時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"90分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"待機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"20分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"停機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"3分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"xxl","contents":[{"type":"text","text":"完工次數","size":"sm","color":"#555555"},{"type":"text","text":"3","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"稼動率","size":"sm","color":"#555555"},{"type":"text","text":"13%","size":"sm","color":"#111111","align":"end"}]}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"md","contents":[{"type":"text","text":"索取時間","size":"xs","color":"#aaaaaa","flex":0},{"type":"text","text":"YYYY/MM/DD HH:mm:ss","color":"#aaaaaa","size":"xs","align":"end"}]}]}}
-	} else if ( mode.match(/天氣/) != null ) {
-		console.log('flexWeatherEnter')
-		return weatherMessage(mode)
-	}
+	} 
 	return rply
 }
 
@@ -591,7 +590,7 @@ function weatherMessage(trigger) {
 						]
 				}
 		})
-		rply.contents = arrRplyContents
+		rply.contents.contents = arrRplyContents
 		return rply
 	});
 }
