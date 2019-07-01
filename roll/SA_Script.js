@@ -323,7 +323,7 @@ function createPerson(mode) {
 		'自大', '怯懦', '貪婪', '邊緣', '弱智', '幹話', '不貞', '不忠', '清掃', '邪術', '無禮', '大聲', '黑洞', '多疑', '放空', '怠惰', 
 		'歡笑', '大愛', '沒品', '浪漫', '信仰', '黑人', '膽小', '歡愉', '空虛', '信教', '路癡', '放空', '炫富', '蠢蛋', '睡眠', '空洞',
 		'中二', '音樂', '笨蛋', '閒晃', '厭惡', '粗暴', '拉屎', '自戀', '邋塌', '留守', '竹鼠', '記者', '妓者', 
-		'大頭症', '不可靠', '反社會', '強迫症', '妄想症', '神秘感', '鄉巴佬', '老馬王', 
+		'大頭症', '不可靠', '反社會', '強迫症', '妄想症', '神秘感', '鄉巴佬', '老馬王', '同性戀', 
 		'不知所措', '無理取鬧', '搖擺不定', '說謊成性', '歇斯底里', '精神分裂', '五臟六腑', '令人反胃', '為了國王', '無法捉摸', 
 		'容易中暑', '時常手滑', '幹話一哥', 
 		'天生的蠢材', 
@@ -339,7 +339,7 @@ function createPerson(mode) {
 		'濁液', '鼻涕', '肥油', '珍珠', '黴菌', '塑膠', '口水', '膝蓋', '檸檬', '農藥', '謎團', '果凍', '草包', '洗澡', '熱狗', '胖子', 
 		'汙垢', '汗水', '淚水', '大麻', '奈米', '毒品', '蒸蚌', '爐渣', '怪獸', '兔肉', '煉乳', '空氣', 
 		'重金屬', '銅臭味', '組織液', '空荷包', '中年禿', '鮪魚肚', '土豆粉', '矮冬瓜', '棉花糖', 
-		'魑魅魍魎', '意大利麵', '雪明炭鐵', 
+		'魑魅魍魎', '意大利麵', '雪明炭鐵', '黃色小鴨', 
 	]
 //Meme
 	let arrMeme = [
@@ -470,30 +470,129 @@ function flexMessage(mode) {
 		rply.altText = 'Fap Fap Fap...'
 		rply.contents = {"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[{"type":"text","text":"當前狀態","weight":"bold","color":"#1DB446","size":"sm"},{"type":"text","text":"機台名稱","weight":"bold","size":"xxl","margin":"md"},{"type":"text","text":"機台位置","size":"xs","color":"#aaaaaa","wrap":true},{"type":"separator","margin":"xxl"},{"type":"box","layout":"vertical","margin":"xxl","spacing":"sm","contents":[{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"執行時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"90分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"待機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"20分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"停機時間","size":"sm","color":"#555555","flex":0},{"type":"text","text":"3分鐘","size":"sm","color":"#111111","align":"end"}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"xxl","contents":[{"type":"text","text":"完工次數","size":"sm","color":"#555555"},{"type":"text","text":"3","size":"sm","color":"#111111","align":"end"}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","text":"稼動率","size":"sm","color":"#555555"},{"type":"text","text":"13%","size":"sm","color":"#111111","align":"end"}]}]},{"type":"separator","margin":"xxl"},{"type":"box","layout":"horizontal","margin":"md","contents":[{"type":"text","text":"索取時間","size":"xs","color":"#aaaaaa","flex":0},{"type":"text","text":"YYYY/MM/DD HH:mm:ss","color":"#aaaaaa","size":"xs","align":"end"}]}]}}
 	} else if ( mode.match(/天氣/) != null ) {
-		rply.altText = '我最愛看著天氣 Fap Fap Fap...'
 		return weatherMessage(mode)
 	}
 	return rply
 }
 
 function weatherMessage(trigger) {
+	rply = {type: "carousel", altText: "我最愛看著天氣 Fap Fap Fap...'"}
 	let arrLocationNameTW = [
 		'%E5%AE%9C%E8%98%AD%E7%B8%A3', //宜蘭縣
 		'%E8%8A%B1%E8%93%AE%E7%B8%A3', //花蓮縣
 		'%E8%87%BA%E6%9D%B1%E7%B8%A3', //臺東縣
+		'%E6%BE%8E%E6%B9%96%E7%B8%A3', //澎湖縣
+		'%E9%87%91%E9%96%80%E7%B8%A3', //金門縣
+		'%E9%80%A3%E6%B1%9F%E7%B8%A3', //連江縣
+		'%E8%87%BA%E5%8C%97%E5%B8%82', //臺北市
+		'%E6%96%B0%E5%8C%97%E5%B8%82', //新北市
+		'%E6%A1%83%E5%9C%92%E5%B8%82', //桃園市
+		'%E8%87%BA%E4%B8%AD%E5%B8%82', //臺中市
+		'%E8%87%BA%E5%8D%97%E5%B8%82', //臺南市
+		'%E9%AB%98%E9%9B%84%E5%B8%82', //高雄市
+		'%E5%9F%BA%E9%9A%86%E5%B8%82', //基隆市
+		'%E6%96%B0%E7%AB%B9%E7%B8%A3', //新竹縣
+		'%E6%96%B0%E7%AB%B9%E5%B8%82', //新竹市
+		'%E8%8B%97%E6%A0%97%E7%B8%A3', //苗栗縣
+		'%E5%8D%97%E6%8A%95%E7%B8%A3', //南投縣
+		'%E9%9B%B2%E6%9E%97%E7%B8%A3', //雲林縣
+		'%E5%98%89%E7%BE%A9%E7%B8%A3', //嘉義縣
+		'%E5%98%89%E7%BE%A9%E5%B8%82', //嘉義市
+		'%E5%B1%8F%E6%9D%B1%E7%B8%A3', //屏東縣
 	]
+	let strLocationName
+	if ( trigger.match(/宜蘭/) != null  ) strLocationName = arrLocationNameTW[0]
+	else if ( trigger.match(/花蓮/) != null  ) strLocationName = arrLocationNameTW[1]
+	else if ( trigger.match(/臺東|台東/) != null  ) strLocationName = arrLocationNameTW[2]
+	else if ( trigger.match(/澎湖/) != null  ) strLocationName = arrLocationNameTW[3]
+	else if ( trigger.match(/金門/) != null  ) strLocationName = arrLocationNameTW[4]
+	else if ( trigger.match(/連江/) != null  ) strLocationName = arrLocationNameTW[5]
+	else if ( trigger.match(/新北|台北縣/) != null  ) strLocationName = arrLocationNameTW[7]	
+	else if ( trigger.match(/臺北|台北/) != null  ) strLocationName = arrLocationNameTW[6]
+	else if ( trigger.match(/桃園/) != null  ) strLocationName = arrLocationNameTW[8]
+	else if ( trigger.match(/臺中|台中/) != null  ) strLocationName = arrLocationNameTW[9]
+	else if ( trigger.match(/臺南|台南/) != null  ) strLocationName = arrLocationNameTW[10]
+	else if ( trigger.match(/高雄/) != null  ) strLocationName = arrLocationNameTW[11]
+	else if ( trigger.match(/基隆/) != null  ) strLocationName = arrLocationNameTW[12]
+	else if ( trigger.match(/新竹市/) != null  ) strLocationName = arrLocationNameTW[14]
+	else if ( trigger.match(/新竹縣|新竹/) != null  ) strLocationName = arrLocationNameTW[13]
+	else if ( trigger.match(/苗栗/) != null  ) strLocationName = arrLocationNameTW[15]
+	else if ( trigger.match(/南投/) != null  ) strLocationName = arrLocationNameTW[16]
+	else if ( trigger.match(/雲林/) != null  ) strLocationName = arrLocationNameTW[17]
+	else if ( trigger.match(/嘉義市/) != null  ) strLocationName = arrLocationNameTW[19]	
+	else if ( trigger.match(/嘉義縣|嘉義/) != null  ) strLocationName = arrLocationNameTW[18]
+	else if ( trigger.match(/屏東/) != null  ) strLocationName = arrLocationNameTW[20]
+	else strLocationName = arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]
+	
 	request({
-			uri: `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&offset=0&format=JSON&locationName=${arrLocationNameTW[Math.floor(Math.random()*arrLocationNameTW.length)]}`,
-			method: "GET",
-			timeout: 10000,
-			followRedirect: true,
-			maxRedirects: 3
+		uri: `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${tokenCWB}&limit=1&offset=0&format=JSON&locationName=${strLocationName}`,
+		method: "GET",
+		timeout: 10000,
+		followRedirect: true,
+		maxRedirects: 3
 	}, function(error, response, body) {
-		if (error) return {type:'text', text:error}
-			//console.log(error)
-			//console.log(response)
-			console.log(JSON.parse(body).records.location[0])
-		return {type:'text',text:body}
+		body = JSON.parse(body)
+		let weatherElement = body.records.location[0].weatherElement
+		let arrTime = [`${weatherElement[0].time[0].startTime}-${weatherElement[0].time[0].endTime}`,`${weatherElement[0].time[1].startTime}-${weatherElement[0].time[1].endTime}`,`${weatherElement[0].time[2].startTime}-${weatherElement[0].time[2].endTime}`,]
+		let arrMaxT = []
+		let arrMinT = []
+		let arrWx = []
+		let arrCI = []
+		let arrPoP = []
+		let arrRplyContents = [{},{},{}]
+		weatherElement.forEach((value)=>{
+				switch (value.elementName) {    
+						case 'MaxT': // 最高溫度
+								for(i=0;i<value.time.length;i++) arrMaxT.push(value.time[i].parameter)
+								break
+						case 'MinT': // 最低溫度
+								for(i=0;i<value.time.length;i++) arrMinT.push(value.time[i].parameter)
+								break
+						case 'Wx': // 天氣現象
+								for(i=0;i<value.time.length;i++) arrWx.push(value.time[i].parameter)
+								break
+						case 'CI': // 舒適度
+								for(i=0;i<value.time.length;i++) arrCI.push(value.time[i].parameter)
+								break
+						case 'PoP': // 降雨機率
+								for(i=0;i<value.time.length;i++) arrPoP.push(value.time[i].parameter)
+								break
+				}
+		})
+		arrRplyContents.forEach((value,index)=>{
+				let tempTime = []
+				arrTime[index].split('-').forEach((value)=>{
+						tempTime=tempTime.concat(value.split(' '))
+				})
+				value.type = "bubble"
+				value.body = {type: "box",layout: "vertical",spacing: "sm",contents: [
+						{type:"text",text:`民國 ${Number(tempTime[0])-1911} 年 ${tempTime[1]} 月 ${tempTime[2]} 日`,weight:"bold",align:"center",size:"xl"},
+						{type:"text",text:`${tempTime[tempTime.length/2-1]} 至 ${tempTime[tempTime.length-1]}`,weight:"bold",align:"center",size:'md'},
+						{type: "separator",margin: "md"},
+						{type: "box",layout: "horizontal",contents: [
+								{type: "text",text: "溫度",size: 'md',color: "#555555",flex: 0},
+								{type: "text",text: `${arrMinT[index].parameterName}°${arrMaxT[index].parameterUnit} ~ ${arrMaxT[index].parameterName}°${arrMaxT[index].parameterUnit}`,size: 'md',color: "#555555",align: "end"} ] },
+						{type: "box",layout: "horizontal",contents: [
+								{type: "text",text: "降雨率",size: 'md',color: "#555555",flex: 0},
+								{type: "text",text: `${arrPoP[index].parameterName} ${arrPoP[index].parameterUnit=='百分比'&&'%'}`,size: 'md',color: "#555555",align: "end"} ] },
+						{type: "box",layout: "horizontal",contents: [
+								{type: "text",text: "舒適度",size: 'md',color: "#555555",flex: 0},
+								{type: "text",text: `${arrCI[index].parameterName}`,size: 'md',color: "#555555",align: "end"} ] },
+						{type: "box",layout: "horizontal",contents: [
+								{type: "text",text: "天氣現象",size: arrWx[index].parameterName.length > 8?'xs':'md',color: "#555555",flex: 0},
+								{type: "text",text: `${arrWx[index].parameterName}`,size: arrWx[index].parameterName.length > 8?'xs':'md',color: "#555555",align: "end"} ] },
+
+				] }
+				value.footer = {type:"box",layout:"vertical",spacing:"sm",contents: [
+						{type: "separator",margin: "md"},
+						{type: "box",layout: "horizontal",margin: "md",contents: [
+								{type: "text",text: "位置",size: "xs",color: "#aaaaaa",flex: 0},
+								{type: "text",text: `中華民國臺灣省${body.records.location[0].locationName}`,color: "#aaaaaa",size: "xs",align: "end"} ] }
+						]
+				}
+		})
+		rply.contents = arrRplyContents
+		return rply
 	});
 }
 
