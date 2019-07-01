@@ -478,7 +478,7 @@ function flexMessage(mode) {
 }
 
 function weatherMessage(trigger) {
-	rply = {type: "carousel", altText: "我最愛看著天氣 Fap Fap Fap...'"}
+	rply = {type: "carousel"}
 	let arrLocationNameTW = [
 		'%E5%AE%9C%E8%98%AD%E7%B8%A3', //宜蘭縣
 		'%E8%8A%B1%E8%93%AE%E7%B8%A3', //花蓮縣
