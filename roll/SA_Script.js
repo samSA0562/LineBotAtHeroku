@@ -593,7 +593,7 @@ function weatherMessage(trigger) {
 				}
 		})
 		reply.contents.contents = arrRplyContents
-		console.log(reply)
+		console.log(JSON.stringify(reply))
 		return reply
 	});
 }
