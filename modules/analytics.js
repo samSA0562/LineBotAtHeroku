@@ -104,7 +104,7 @@ async function parseInputText(sourceId, userId, rplyToken, inputStr) {
 	}
 	//if (trigger.match(/發出蘇卡的聲音|發出醋咔的聲音/) != null) return exports.SA_Script.SuikaEcho()
 	//if (trigger.match(/尻/) != null) return exports.SA_Script.flexMessage(trigger)
-	rplyMsg = exports.SA_Script.analytics(trigger,inputStr)
+	let rplyMsg = exports.SA_Script.textAnalytics(trigger,inputStr)
 	if (rplyMsg) return rplyMsg
 	
 	//return exports.SA_Script.otherParse(inputStr);
@@ -118,6 +118,8 @@ async function parseInputText(sourceId, userId, rplyToken, inputStr) {
 function parseInputSticker(sourceId, rplyToken, stickerId, packageId) {
 	if (Math.floor(Math.random()*100) <= 30) //30%機率貼圖)
 		if (stickerId == 3352108 && packageId == 1081469) return exports.SA_Script.imageMessage('SSYT')
+	let rplyMsg = exports.SA_Script.stickerAnalytics(sourceId,rplyToken,stickerId,packageId)
+	if (rplyMsg) return rplyMsg
 }
 function InitializeAllSheetsData(Data, Sheet, auth) {
 	//console.log("analytics pass sheet");

@@ -146,7 +146,10 @@ app.post('/cmdSend', bodyParser, function(req, res) {
 		break;
 	}
 	res.send('ok');
-});
+})
+app.get('/api/requestCWB', function(req, res, next){
+	res.send('Start request CWB!!');
+})
 app.use(function(err, req, res, next) {
 	res.status(500);
 	res.render('error', { error: err });
@@ -272,7 +275,32 @@ function InitializeGoogleSheet(auth) {
 	  */
 	  exports.analytics.InitializeAllSheetsData(rows3, "MsgSourceLog", googleAuthData); 
     }
-  });
+	});
+	sheets.spreadsheets.values.get({
+		auth: auth,
+		spreadsheetId: '1p0A157mAYN9VyPrDHIZai-Uvd9nIbik2QVkbS_LimG8',
+		range: 'CWBWeather!A2:C',
+	}, function(err, response) {
+		if (err) {
+			console.log('The API returned an error: ' + err);
+			return;
+		}
+		var rows3 = response.data.values;
+		if (rows3.length == 0) {
+			strError = strError + "(MsgSourceLog) No Data found!! "
+		} else {
+			//console.log('Name, Major:');
+		//console.log("sheet data found sucessful!");
+		/*
+			for (var i = 0; i < rows2.length; i++) {
+				var row = rows2[i];
+				// Print columns A and E, which correspond to indices 0 and 4.
+				console.log('%s, %s', row[0], row[1]);
+			}
+		*/
+		exports.analytics.InitializeAllSheetsData(rows3, "CWBWeather", googleAuthData); 
+		}
+	})
   if (strError)
 	console.log(strError);
   else

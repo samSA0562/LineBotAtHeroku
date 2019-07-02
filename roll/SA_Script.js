@@ -1,19 +1,18 @@
 const {google} = require('googleapis')
-const fetch = require('node-fetch')
-const tokenCWB = process.env.CWB_ACCESSTOKEN
 
 var rply ={type : 'text'} //type是必需的,但可以更改
 var ReplyString   //跟上回話用全域變數_字串
 var ReplyCount=0
 var SDMDSheet_BakaLang = []
 var Sheet_MsgSourceLog = []
+var Sheet_CWBWeather = []
 var googleAuthData;
 
 var items=["A賞(0.01％) ", "B賞(0.99％)", "C賞(1.5％)", "D賞(2.5％)", "E賞(3％)" , "F賞(5％)", "G賞(87％)"];
 var itemsWeight=[1, 99, 150, 250, 300, 500, 8700];
 
-function analytics(trigger, inputStr) {
-	console.log('=== Start analytics from SA_Script ===')
+function textAnalytics(trigger, inputStr) {
+	console.log('=== Start textAnalytics from SA_Script ===')
 	console.log(trigger)
 	if (trigger.match(/蘇卡|醋咔|酥卡/) != null && trigger.match(/聲音|身音/) != null) {
 		return imageMessage('suika')
@@ -22,11 +21,18 @@ function analytics(trigger, inputStr) {
 	} else if (trigger.match(/組成|成分|成份|生成/) != null) {
 		return createPerson()
 	} else if (trigger.match(/天氣/) != null ) {
-		weatherMessage(trigger).then((reply)=>{ console.log('analytics reply'); return reply })
+		weatherMessage(trigger).then((reply)=>{ console.log('textAnalytics reply'); return reply })
 	} else {
 		return otherParse(inputStr)
 	}
-	console.log('=== End analytics from SA_Script ===')
+	console.log('=== End textAnalytics from SA_Script ===')
+}
+
+function stickerAnalytics(sourceId,rplyToken,stickerId,packageId) {
+	console.log('=== Start textAnalytics from SA_Script ===')
+	console.log(`${packageId}:${stickerId}`)
+	return stickerMessage(stickerId,packageId)
+	console.log('=== End textAnalytics from SA_Script ===')
 }
 
 function BaKaLanguage(trigger)
@@ -225,6 +231,9 @@ function InitializeAllSheetsData(Data, Sheet, auth) {
 		Sheet_MsgSourceLog = Data;
 		//console.log(Data);
 		break;
+	case 'CWBWeather':
+		Sheet_CWBWeather = Data
+		break
 	default:
 		console.log("function InitializeAllSheetsData(Data, %s) : " , Sheet);
 	}
@@ -299,7 +308,7 @@ function SuikaEcho() {
 }
 
 function imageMessage(mode) {
-	rply.type = 'image'
+	reply.type = 'image'
 	let rplyImage =''
 	switch(mode) {
 		case 'suika':	//我婆
@@ -309,8 +318,17 @@ function imageMessage(mode) {
 			rplyImage = 'https://i.imgur.com/LU1m6K5.jpg'
 			break
 	}
-	rply.originalContentUrl = rply.previewImageUrl = rplyImage
-	return rply
+	reply.originalContentUrl = reply.previewImageUrl = rplyImage
+	return reply
+}
+
+function stickerMessage(stickerId,packageId) {
+	let reply ={type:'sticker'} //{"type": "sticker","packageId": "1","stickerId": "1"}
+	if (stickerId == 52114122 && packageId == 11539) {
+		reply.packageId = packageId
+		reply.stickerId = stickerId
+	} 
+	return reply
 }
 
 function createPerson(mode) {
@@ -342,7 +360,7 @@ function createPerson(mode) {
 //物質
 	let arrMaterial = [
 		'濁液', '鼻涕', '肥油', '珍珠', '黴菌', '塑膠', '口水', '膝蓋', '檸檬', '農藥', '謎團', '果凍', '草包', '洗澡', '熱狗', '胖子', 
-		'汙垢', '汗水', '淚水', '大麻', '奈米', '毒品', '蒸蚌', '爐渣', '怪獸', '兔肉', '煉乳', '空氣', 
+		'汙垢', '汗水', '淚水', '大麻', '奈米', '毒品', '蒸蚌', '爐渣', '怪獸', '兔肉', '煉乳', '空氣', '矽膠', 
 		'重金屬', '銅臭味', '組織液', '空荷包', '中年禿', '鮪魚肚', '土豆粉', '矮冬瓜', '棉花糖', 
 		'魑魅魍魎', '意大利麵', '雪明炭鐵', '黃色小鴨', 
 	]
@@ -426,13 +444,13 @@ function createPerson(mode) {
 	})
 
   rply.contents = {"type":"bubble","styles":{"footer":{"separator":true}},"body":{"type":"box","layout":"vertical","contents":[
-    {"type":"text","text":"一生組成成分","weight":"bold","size":"xxl","margin":"md","align":"center"},
+    {"type":"text","text":"成分列表","weight":"bold","size":"xxl","margin":"md","align":"center"},
     {"type":"separator","margin":"md"},
     {"type":"box","layout":"vertical","margin":"md","spacing":"sm","contents":arrRplyElementContents},
     {"type":"separator","margin":"md"},
     {"type":"box","layout":"horizontal","margin":"md","contents":[
     {"type":"text","text":"單號","size":"xs","color":"#aaaaaa","flex":0},
-    {"type":"text","text":`#2133${Math.floor(Math.random()*1000)}1092${Math.floor(Math.random()*1000)}5100`,"color":"#aaaaaa","size":"xs","align":"end"}]}
+    {"type":"text","text":`#2133${Math.floor(Math.random()*10000)}1092${Math.floor(Math.random()*10000)}5100`,"color":"#aaaaaa","size":"xs","align":"end"}]}
     ]}}
 
 	return rply
@@ -604,7 +622,8 @@ function weatherMessage(trigger) {
 }
 
 module.exports = {
-	analytics,
+	textAnalytics,
+	stickerAnalytics,
 	BaKaLanguage,
 	textIsNeedReply,
 	ReplyMsg,
@@ -615,5 +634,6 @@ module.exports = {
 	otherParse,
 	flexMessage,
 	imageMessage,
+	sickerMessage: stickerMessage,
 	weatherMessage,
 };
