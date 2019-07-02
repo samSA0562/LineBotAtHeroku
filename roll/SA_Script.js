@@ -302,13 +302,13 @@ function stickerShruggie()  {
 }
 
 function SuikaEcho() {
-	rply.type = 'image'
-	rply.originalContentUrl = rply.previewImageUrl = 'https://i.imgur.com/UGFJTbN.jpg'
-	return rply 
+	let reply = {type : 'image'}
+	reply.originalContentUrl = reply.previewImageUrl = 'https://i.imgur.com/UGFJTbN.jpg'
+	return reply 
 }
 
 function imageMessage(mode) {
-	let reply.type = 'image'
+	let reply={type : 'image'}
 	let rplyImage =''
 	switch(mode) {
 		case 'suika':	//我婆
