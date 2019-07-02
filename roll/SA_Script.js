@@ -308,7 +308,7 @@ function SuikaEcho() {
 }
 
 function imageMessage(mode) {
-	reply.type = 'image'
+	let reply.type = 'image'
 	let rplyImage =''
 	switch(mode) {
 		case 'suika':	//我婆
