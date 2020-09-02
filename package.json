@@ -15,7 +15,7 @@
     "cloudinary": "",
     "express": "4.13.3",
     "google-auth-library": "2.0.1",
-    "googleapis": "^36.0.0",
+    "googleapis": "^59.0.0",
     "node-fetch": "^2.6.0",
     "request": "^2.88.0"
   },
